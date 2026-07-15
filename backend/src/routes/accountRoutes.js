@@ -1,7 +1,7 @@
 import express from "express";
 import {
   openAccount, getMyAccounts, getAccountById, getAccounts, updateAccountStatus,
-} from "../controllers/accountController.js";
+} from "../controllers/accoutnController.js";
 import { deposit, withdraw, getAccountTransactions } from "../controllers/transactionController.js";
 import { authenticate } from "../middleware/authenticate.js";
 import { authorize } from "../middleware/authorize.js";

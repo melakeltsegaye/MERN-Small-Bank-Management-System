@@ -1,4 +1,4 @@
-import { connectDB } from "./src/lib/db.js"
+import { connectDB } from "./lib/db.js"
 import dotenv from "dotenv"
 import app from "./app.js"
 

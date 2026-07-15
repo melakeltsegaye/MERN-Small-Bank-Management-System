@@ -1,6 +1,11 @@
 import { User } from "../models/User.js";
 import { asyncHandler } from "../utils/asyncHandler.js"
 import { AuditLog } from "../models/AuditLog.js";
+import {
+  generateAccessToken,
+  generateRefreshToken,
+  setRefreshCookie,
+} from "../utils/generateTokens.js";
 
 // signup controller 
 const MAX_FAILED_ATTEMPTS = 5;
@@ -45,7 +50,7 @@ export const login = asyncHandler(async (req, res) => {
     throw new Error("Email and Password are required")
   }
 
-  const user = User.findOne({email}).select("+password")
+  const user = await User.findOne({email}).select("+password")
 
   if(!user) {
     res.status(401)
