@@ -16,8 +16,8 @@ export const authenticate = asyncHandler(async (req, res, next) => {
   try {
     decoded = jwt.verify(token, process.env.JWT_SECRET);
   } catch (err) {
-    res.status(401);
-    throw new Error("Not authorized, token invalid or expired");
+  res.status(401);
+  throw new Error("Not authorized, token invalid or expired");
   }
 
   const user = await User.findById(decoded.id);

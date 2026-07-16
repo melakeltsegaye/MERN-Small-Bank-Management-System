@@ -1,6 +1,7 @@
 import { User } from "../models/User.js";
 import { asyncHandler } from "../utils/asyncHandler.js"
 import { AuditLog } from "../models/AuditLog.js";
+import jwt from "jsonwebtoken";
 import {
   generateAccessToken,
   generateRefreshToken,
@@ -118,12 +119,12 @@ export const refresh = asyncHandler(async (req, res) => {
   }
 
   let decoded;
-  try {
-    decoded = jwt.verify(token, process.env.JWT_REFRESH_SECRET);
-  } catch (err) {
-    res.status(401);
-    throw new Error("Invalid or expired refresh token");
-  }
+ try {
+  decoded = jwt.verify(token, process.env.JWT_REFRESH_SECRET);
+} catch (err) {
+  res.status(401);
+  throw new Error("Invalid or expired refresh token");
+}
 
   const user = await User.findById(decoded.id);
   if (!user) {
