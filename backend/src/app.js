@@ -39,7 +39,7 @@ app.use("/api/accounts", accountRoutes);
 app.use("/api/transactions", transactionRoutes);
 app.use("/api/loans", loanRoutes);
 
-if(ENV.NODE_ENV === "production") {
+if(process.env.NODE_ENV === "production") {
      const frontendPath = path.join(__dirname, "../frontend/dist");
 
     console.log(frontendPath);
