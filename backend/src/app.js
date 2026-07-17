@@ -9,9 +9,12 @@ import userRoutes from "./routes/userRoutes.js";
 import accountRoutes from "./routes/accountRoutes.js";
 import transactionRoutes from "./routes/transactionRoutes.js";
 import loanRoutes from "./routes/loanRoutes.js";
+import path from "path"
 
 
 const app = express()
+
+const __dirname = path.resolve()
 
 app.use(helmet())
 app.use(cors({
@@ -35,6 +38,18 @@ app.use("/api/users", userRoutes);
 app.use("/api/accounts", accountRoutes);
 app.use("/api/transactions", transactionRoutes);
 app.use("/api/loans", loanRoutes);
+
+if(ENV.NODE_ENV === "production") {
+     const frontendPath = path.join(__dirname, "../frontend/dist");
+
+    console.log(frontendPath);
+
+    app.use(express.static(frontendPath));
+
+    app.get(/.*/, (req, res) => {
+        res.sendFile(path.join(frontendPath, "index.html"));
+    });
+}
 
 app.use(notFound)
 app.use(errorHandler)
