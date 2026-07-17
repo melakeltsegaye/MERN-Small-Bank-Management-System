@@ -1,15 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { getAccounts, updateAccountStatus } from "../../api/accountApi";
 import PageHeader from "../../components/common/PageHeader";
 import Loader from "../../components/common/Loader";
 import Badge from "../../components/common/Badge";
+import OpenAccountForm from "../../components/common/OpenAccountForm";
 
 const fmt = (n) => new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(n || 0);
 
 const AccountsOverview = () => {
   const queryClient = useQueryClient();
   const { data, isLoading } = useQuery({ queryKey: ["accounts", "all"], queryFn: () => getAccounts({ limit: 100 }) });
+  const [showForm, setShowForm] = useState(false);
 
   const toggleFreeze = async (acc) => {
     const nextStatus = acc.status === "active" ? "frozen" : "active";
@@ -17,9 +19,29 @@ const AccountsOverview = () => {
     queryClient.invalidateQueries({ queryKey: ["accounts", "all"] });
   };
 
+  const handleCreated = () => {
+    setShowForm(false);
+    queryClient.invalidateQueries({ queryKey: ["accounts", "all"] });
+  };
+
   return (
     <div>
-      <PageHeader eyebrow="Oversight" title="All accounts" description="Freeze, unfreeze, or review any account." />
+      <PageHeader
+        eyebrow="Oversight"
+        title="All accounts"
+        description="Freeze, unfreeze, review, or open new accounts."
+        action={
+          <button onClick={() => setShowForm((s) => !s)} className="btn-primary text-sm">
+            {showForm ? "Close" : "Open account"}
+          </button>
+        }
+      />
+
+      {showForm && (
+        <div className="max-w-lg mb-8">
+          <OpenAccountForm onCreated={handleCreated} />
+        </div>
+      )}
 
       {isLoading ? (
         <Loader label="Fetching accounts" />

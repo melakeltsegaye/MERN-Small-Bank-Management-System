@@ -5,6 +5,7 @@ import { getUsers, createStaffUser, updateUserStatus, updateUserRole } from "../
 import PageHeader from "../../components/common/PageHeader";
 import Loader from "../../components/common/Loader";
 import Badge from "../../components/common/Badge";
+import { Copy } from "lucide-react";
 
 const STAFF_ROLES = ["employee", "loan_officer", "manager", "admin"];
 
@@ -14,6 +15,15 @@ const ManageEmployees = () => {
   const { register, handleSubmit, reset, formState: { errors } } = useForm();
   const [message, setMessage] = useState(null);
   const [showForm, setShowForm] = useState(false);
+
+  const copyToClipboard = async (text) => {
+  try {
+    await navigator.clipboard.writeText(text);
+    alert("Copied!");
+  } catch (err) {
+    console.error("Failed to copy:", err);
+  }
+};
 
   const invalidate = () => queryClient.invalidateQueries({ queryKey: ["users", "staff"] });
 
@@ -116,6 +126,7 @@ const ManageEmployees = () => {
                 <th className="text-left px-4 py-3 font-medium">Name</th>
                 <th className="text-left px-4 py-3 font-medium">Email</th>
                 <th className="text-left px-4 py-3 font-medium">Role</th>
+                <th className="text-left px-4 py-3 font-medium">ID</th>
                 <th className="text-right px-4 py-3 font-medium">Status</th>
                 <th className="px-4 py-3"></th>
               </tr>
@@ -137,6 +148,20 @@ const ManageEmployees = () => {
                       ))}
                     </select>
                   </td>
+                  <td className="px-4 py-3 text-right">
+  <div className="flex items-center justify-end gap-2">
+    <Badge status={u._id} />
+
+    <button
+      onClick={() => copyToClipboard(u._id)}
+      className="p-1 rounded hover:bg-gray-100 transition-colors"
+      title="Copy ID"
+      aria-label="Copy ID"
+    >
+      <Copy size={16} className="text-gray-500 hover:text-blue-600" />
+    </button>
+  </div>
+</td>
                   <td className="px-4 py-3 text-right"><Badge status={u.status} /></td>
                   <td className="px-4 py-3 text-right">
                     <button onClick={() => handleStatusToggle(u)} className="text-xs text-vault-goldLight hover:underline">

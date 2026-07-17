@@ -33,6 +33,20 @@ export default {
         "ledger-lines":
           "repeating-linear-gradient(to bottom, transparent, transparent 27px, rgba(201,162,39,0.06) 28px)",
       },
+      keyframes: {
+  float: {
+    "0%, 100%": { transform: "translateY(0px)" },
+    "50%": { transform: "translateY(-12px)" },
+  },
+  glowPulse: {
+    "0%, 100%": { opacity: 0.5 },
+    "50%": { opacity: 0.9 },
+  },
+},
+animation: {
+  float: "float 6s ease-in-out infinite",
+  glowPulse: "glowPulse 4s ease-in-out infinite",
+},
     },
   },
   plugins: [],

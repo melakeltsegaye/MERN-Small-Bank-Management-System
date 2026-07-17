@@ -25,6 +25,7 @@ const userSchema = new mongoose.Schema(
     phone: { type: String, trim: true },
     address: { street: String, city: String, state: String, zipCode: String, country: String },
     employeeId: { type: String, unique: true, sparse: true },
+    branch: { type: String, trim: true },
     hiredAt: { type: Date },
     status: { type: String, enum: ["active", "suspended", "deactivated"], default: "active" },
     refreshTokens: [

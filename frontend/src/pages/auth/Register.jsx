@@ -27,9 +27,12 @@ const Register = () => {
   return (
     <div className="min-h-screen bg-ink-900 flex items-center justify-center px-4 relative overflow-hidden">
       <div className="absolute inset-0 bg-ledger-lines opacity-40 pointer-events-none" />
+      <div className="absolute top-1/4 -right-32 w-72 h-72 rounded-full bg-vault-emerald/10 blur-3xl animate-glowPulse pointer-events-none" />
+      <div className="absolute bottom-1/4 -left-32 w-72 h-72 rounded-full bg-vault-gold/10 blur-3xl animate-glowPulse pointer-events-none" style={{ animationDelay: "1.5s" }} />
+
       <div className="w-full max-w-sm relative">
         <div className="text-center mb-8">
-          <div className="w-12 h-12 rounded-lg bg-vault-gold flex items-center justify-center mx-auto mb-4">
+          <div className="w-12 h-12 rounded-lg bg-vault-gold flex items-center justify-center mx-auto mb-4 shadow-[0_0_30px_rgba(201,162,39,0.4)] animate-float">
             <span className="text-ink-950 font-display font-bold text-xl">V</span>
           </div>
           <h1 className="font-display text-2xl font-semibold">Open an account</h1>
@@ -63,7 +66,7 @@ const Register = () => {
 
             <div>
               <label className="label">Phone</label>
-              <input className="input-field" placeholder="+1 555 000 0000" {...register("phone")} />
+              <input className="input-field" placeholder="+251 900 0000 00" {...register("phone")} />
             </div>
 
             <div>
